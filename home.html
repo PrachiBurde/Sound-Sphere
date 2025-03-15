@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MP Music</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">SonicFusion</div>
+        <ul class="nav-links">
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#featured">Featured</a></li>
+            <!-- <li><a href="#">Library</a></li> -->
+            <li><a href="#">90's Hits</a></li>
+            <li><a href="artists.html">Artists</a></li>
+        </ul>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search music...">
+            <button class="search-btn">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        <div class="search-results" id="searchResults">
+            <!-- Search results will be populated here -->
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Discover Your Sound</h1>
+            <p>Stream millions of songs, create playlists, and share your favorite tracks with friends.</p>
+            <button class="cta-btn">Start Listening</button>
+            <div class="search-results" id="searchResults">
+                <!-- Search results will be displayed here -->
+            </div>
+        </div>
+    </section>    
+    
+    <!-- Featured Music -->
+    <section id="featured">
+        <h2 class="section-title">Featured This Week</h2>
+        <div class="music-grid">
+            <!-- Album 1 -->
+            <div class="music-card">
+                <div class="music-info">
+                    <div class="music-title">Midnight Dreams</div>
+                    <div class="music-artist">Aurora Skies</div>
+                </div>
+            </div>
+            
+            <!-- Album 2 -->
+            <div class="music-card">
+                <!-- <img src="/api/placeholder/200/180" alt="Album Cover" class="music-thumbnail"> -->
+                <div class="music-info">
+                    <div class="music-title">Electric Pulse</div>
+                    <div class="music-artist">Neon Wave</div>
+                </div>
+            </div>
+            
+            <!-- Album 3 -->
+            <div class="music-card">
+                <!-- <img src="/api/placeholder/200/180" alt="Album Cover" class="music-thumbnail"> -->
+                <div class="music-info">
+                    <div class="music-title">Sunset Boulevard</div>
+                    <div class="music-artist">The Dreamers</div>
+                </div>
+            </div>
+            
+            <!-- Album 4 -->
+            <div class="music-card">
+                <!-- <img src="/api/placeholder/200/180" alt="Album Cover" class="music-thumbnail"> -->
+                <div class="music-info">
+                    <div class="music-title">Ocean Waves</div>
+                    <div class="music-artist">Coastal Vibes</div>
+                </div>
+            </div>
+            
+            <!-- Album 5 -->
+            <div class="music-card">
+                <!-- <img src="/api/placeholder/200/180" alt="Album Cover" class="music-thumbnail"> -->
+                <div class="music-info">
+                    <div class="music-title">Urban Jungle</div>
+                    <div class="music-artist">City Sounds</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Music Categories -->
+    <section class="categories">
+        <h2 class="section-title">Browse by Genre</h2>
+        <div class="category-container">
+            <div class="category-card" style="background-image: url('/api/placeholder/300/100')">
+                <span>Pop</span>
+            </div>
+            <div class="category-card" style="background-image: url('/api/placeholder/300/100')">
+                <span>Rock</span>
+            </div>
+            <div class="category-card" style="background-image: url('/api/placeholder/300/100')">
+                <span>Hip Hop</span>
+            </div>
+            <div class="category-card" style="background-image: url('/api/placeholder/300/100')">
+                <span>Electronic</span>
+            </div>
+            <div class="category-card" style="background-image: url('/api/placeholder/300/100')">
+                <span>Classical</span>
+            </div>
+            <div class="category-card" style="background-image: url('/api/placeholder/300/100')">
+                <span>Jazz</span>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Music Player -->
+    <div class="music-player">
+        <div class="now-playing">
+            <img src="/api/placeholder/60/60" alt="Now Playing">
+            <div class="track-info">
+                <div class="track-name">Electric Pulse</div>
+                <div class="artist-name">Neon Wave</div>
+            </div>
+        </div>
+        
+        <div class="player-controls">
+            <button class="control-btn">⏮️</button>
+            <button class="control-btn play-btn">▶️</button>
+            <button class="control-btn">⏭️</button>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+        </div>
+        
+        <div class="volume-container">
+            <span>🔊</span>
+            <input type="range" class="volume-slider" min="0" max="100" value="80">
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">News</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Communities</h3>
+                <ul class="footer-links">
+                    <li><a href="#">For Artists</a></li>
+                    <li><a href="#">Developers</a></li>
+                    <li><a href="#">Advertising</a></li>
+                    <li><a href="#">Investors</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Useful Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Web Player</a></li>
+                    <li><a href="#">Mobile App</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Connect with Us</h3>
+                <p>Stay engaged with our community on social media and never miss an update.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 Rhythm. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="home.js"></script>
+    <script src="https://kit.fontawesome.com/9e5a623fa6.js" crossorigin="anonymous"></script>
+
+</body>
+</html>
