@@ -27,7 +27,7 @@ body {
 .logo {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #1db954;
+    color: #8a18a4;
 }
 
 .nav-links {
@@ -47,7 +47,7 @@ body {
 }
 
 .nav-links a:hover {
-    color: #1db954;
+    color: #8a18a4;
 }
 
 /* Base styles for the search container */
@@ -72,7 +72,7 @@ body {
 }
 
 .search-btn {
-    background: #1db954;
+    background: #8a18a4;
     border: none;
     border-radius: 50%;
     width: 32px;
@@ -210,7 +210,7 @@ body {
 }
 
 .cta-btn {
-    background: rgb(3, 118, 32);
+    background: #8a18a4;
     color: white;
     padding: 12px 18px;
     font-size: 16px;
@@ -222,7 +222,7 @@ body {
 }
 
 .cta-btn:hover {
-    background-color: #18a448;
+    background-color: #c437e4;
 }
 
 /* Featured Section */
@@ -246,7 +246,7 @@ body {
     transform: translateX(-50%);
     width: 60px;
     height: 3px;
-    background-color: #1db954;
+    background-color: #8a18a4;
 }
 
 /* Center Music Cards Horizontally */
@@ -260,7 +260,7 @@ body {
 
 /* Music Card */
 .music-card {
-    background: linear-gradient(135deg, #06b54c, #024a09); /* Trendy gradient */
+    background: linear-gradient(135deg, #8a18a4, #2e013a); /* Trendy gradient */
     border-radius: 8px;
     overflow: hidden;
     transition: transform 0.3s, background 0.5s;
@@ -276,7 +276,7 @@ body {
 
 .music-card:hover {
     transform: translateY(-10px);
-    background: linear-gradient(135deg, #06b54c, #06580e); /* Reverse gradient on hover */
+    background: linear-gradient(135deg, #8a18a4, #2e013a); /* Reverse gradient on hover */
 }
 
 .music-info {
@@ -369,7 +369,7 @@ body {
 .progress {
     width: 30%;
     height: 100%;
-    background-color: #1db954;
+    background-color: #8a18a4;
     border-radius: 2px;
 }
 
@@ -444,7 +444,7 @@ footer {
 .footer-column h3 {
     font-size: 1.2rem;
     margin-bottom: 20px;
-    color: #1db954;
+    color: #8a18a4;
 }
 
 .footer-links {
