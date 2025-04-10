@@ -1,5 +1,47 @@
 <?php
 // search.php - Backend search handler
+// Enable CORS (for development)
+header("Access-Control-Allow-Origin: *");
+
+// Check if a file was uploaded
+if (isset($_FILES['audioFile']) && $_FILES['audioFile']['error'] === UPLOAD_ERR_OK) {
+    // Define upload directory
+    $uploadDir = '../uploads/';
+    
+    // Create directory if it doesn't exist
+    if (!file_exists($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+    
+    // Get file info
+    $fileName = basename($_FILES['audioFile']['name']);
+    $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+    
+    // Only allow audio files
+    $allowedExts = ['mp3', 'wav', 'ogg'];
+    if (!in_array($fileExt, $allowedExts)) {
+        echo json_encode(['success' => false, 'message' => 'Only MP3, WAV, and OGG files are allowed']);
+        exit;
+    }
+    
+    // Generate unique filename
+    $newFileName = uniqid() . '.' . $fileExt;
+    $uploadPath = $uploadDir . $newFileName;
+    
+    // Move uploaded file
+    if (move_uploaded_file($_FILES['audioFile']['tmp_name'], $uploadPath)) {
+        // Return success response with the file path
+        echo json_encode([
+            'success' => true, 
+            'filePath' => 'uploads/' . $newFileName,
+            'fileName' => $fileName
+        ]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Failed to upload file']);
+    }
+} else {
+    echo json_encode(['success' => false, 'message' => 'No file uploaded or upload error']);
+}
 
 // Database connection
 function connectToDatabase() {

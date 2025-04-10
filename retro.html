@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro | SoundSphere</title>
+    <link rel="stylesheet" href="retro.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <a href="index.html">SoundSphere</a>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="home.html#featured">Featured</a></li>
+                <li><a href="#container" class="active">Retro Tracks</a></li>
+                <li><a href="artists.html">Artists</a></li>
+            </ul>
+        </nav>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search music...">
+            <button class="search-btn">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        <!-- Search Results Container -->
+        <div class="search-results" id="searchResults">
+            <!-- Search results will be populated here -->
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container" id="container">
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>90's Greatest Hits</h1>
+                <p>Revisit the golden era of music with these classic tracks that defined a generation</p>
+            </div>
+        </section>
+
+        <!-- Genre Filters -->
+        <section class="filters">
+            <h1>Genres</h1>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-genre="all">All Songs</button>
+                <button class="filter-btn" data-genre="romantic">Romantic</button>
+                <button class="filter-btn" data-genre="upbeat">Upbeat</button>
+                <button class="filter-btn" data-genre="sad">Sad</button>
+            </div>
+        </section>
+
+        <section class="tracks-wrapper">
+            <h2>Top 90's Tracks</h2>
+            <div class="tracks-container">
+                <div class="tracks-header">
+                    <div class="header-rank">#</div>
+                    <div class="header-name">Title</div>
+                    <div class="header-performer">Artist</div>
+                    <div class="header-record">Album</div>
+                    <div class="header-date">Year</div>
+                    <div class="header-controls"></div>
+                </div>
+                <div id="tracks-content" class="tracks-content">
+                    <div class="loader-animation">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="2" x2="12" y2="6"></line>
+                            <line x1="12" y1="18" x2="12" y2="22"></line>
+                            <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+                            <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+                            <line x1="2" y1="12" x2="6" y2="12"></line>
+                            <line x1="18" y1="12" x2="22" y2="12"></line>
+                            <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+                            <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+                        </svg>
+                        <p>Loading awesome 90's hits...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popup Music Player (will be dynamically added by JavaScript) -->
+        <div id="popup-music-player-container"></div>
+
+        <style>
+            /* Tracks Wrapper */
+            .tracks-wrapper {
+                max-width: 1250px;
+                margin: 2rem auto;
+                background-color: #1e1e1e;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(43, 43, 43, 0.1);
+                padding: 1.5rem;
+            }
+
+            .tracks-wrapper h2 {
+                margin-bottom: 1.5rem;
+                color: #f9f9f9;
+                font-size: 2rem;
+                position: relative;
+            }
+
+            .tracks-wrapper h2::after {
+                content: "";
+                display: block;
+                width: 100px;
+                height: 3px;
+                margin: 0.5rem auto;
+            }
+
+            /* Tracks Container */
+            .tracks-container {
+                overflow-x: auto;
+            }
+
+            .tracks-header {
+                display: grid;
+                grid-template-columns: 50px 2fr 1.5fr 2fr 100px 50px;
+                align-items: center;
+                font-weight: bold;
+                padding: 1rem 0.5rem;
+                border-bottom: 1px solid #333333;
+                position: sticky;
+                top: 0;
+                z-index: 2;
+            }
+
+            .track-item {
+                display: grid;
+                grid-template-columns: 50px 2fr 1.5fr 2fr 100px 50px;
+                align-items: center;
+                padding: 0.75rem 0.5rem;
+                border-bottom: 1px solid #333333;
+                transition: background-color 0.2s ease;
+            }
+
+            .track-item:hover {
+                background-color: #333333;
+            }
+
+            .play-button {
+                background: none;
+                border: none;
+                cursor: pointer;
+                color: #b3b3b3;
+                transition: color 0.2s ease;
+            }
+
+            .play-button:hover {
+                color: #8a18a4;
+            }
+
+            /* Loader Animation */
+            .loader-animation {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 2rem;
+                color: #8a18a4;
+            }
+
+            .loader-animation svg {
+                animation: spin 1.5s linear infinite;
+                margin-bottom: 1rem;
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            /* Popup Music Player */
+            .popup-music-player {
+                position: fixed;
+                bottom: -100%;
+                left: 0;
+                width: 100%;
+                align-items: center;
+                background-color: #1e1e1e;
+                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+                transition: bottom 0.3s ease-in-out;
+                z-index: 1000;
+                display: flex;
+                padding: 1rem;
+                border-top: 1px solid #eee;
+            }
+
+            .popup-music-player.active {
+                bottom: 0;
+            }
+
+            .player-album-art {
+                width: 60px;
+                height: 60px;
+                background-color: #333333;
+                margin-right: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 8px;
+            }
+
+            .player-album-art img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: cover;
+            }
+
+            .player-details {
+                flex-grow: 1;
+            }
+
+            .player-details h3 {
+                margin: 0;
+                font-size: 1rem;
+                color: #b3b3b3;
+            }
+
+            .player-details p {
+                margin: 0.25rem 0 0;
+                font-size: 0.875rem;
+                color: #b3b3b3;
+            }
+
+            .player-controls {
+                display: flex;
+                align-items: center;
+            }
+
+            .player-control-btn {
+                background: none;
+                border: none;
+                cursor: pointer;
+                margin: 0 0.5rem;
+                color: #b3b3b3;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .player-control-btn:hover {
+                color: #8a18a4;
+            }
+
+            .player-control-btn svg {
+                width: 24px;
+                height: 24px;
+            }
+
+            .player-progress {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 4px;
+                background-color: #e0e0e0;
+            }
+
+            .player-progress-fill {
+                height: 100%;
+                background-color: #8a18a4;
+                width: 0;
+                transition: width 0.1s linear;
+            }
+
+            .player-close {
+                background: none;
+                border: none;
+                cursor: pointer;
+                margin-left: 1rem;
+                color: #b3b3b3;
+            }
+
+            .player-close:hover {
+                color: #8a18a4;
+            }
+
+            /* Responsive Styles */
+            @media (max-width: 768px) {
+                .tracks-header {
+                    grid-template-columns: 40px 1fr 40px;
+                }
+
+                .track-item {
+                    grid-template-columns: 40px 1fr 40px;
+                    padding: 1rem 0.5rem;
+                }
+
+                .header-performer,
+                .header-record,
+                .header-date,
+                .track-item .artist,
+                .track-item .album,
+                .track-item .year {
+                    display: none;
+                }
+
+                .popup-music-player {
+                    padding: 0.75rem;
+                }
+
+                .player-album-art {
+                    width: 50px;
+                    height: 50px;
+                }
+
+                .player-details h3 {
+                    font-size: 0.9rem;
+                }
+
+                .player-details p {
+                    font-size: 0.75rem;
+                }
+
+                .player-control-btn svg {
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+
+            /* Genres Section Styling */
+            .filters {
+                max-width: 1250px;
+                margin: 2rem auto;
+                text-align: center;
+                background-color: #282828;
+                border-radius: 7px;
+            }
+
+            .filters h1 {
+                text-align: left;
+                margin-left: 20px;
+                padding-top: 10px;
+                color: #f9f9f9;
+                font-size: 2rem;
+                position: relative;
+            }
+
+            .filters h1::after {
+                content: "";
+                display: block;
+                width: 100px;
+                height: 3px;
+                margin: 0.5rem auto;
+            }
+
+            .filter-buttons {
+                display: flex;
+                gap: 1rem;
+                margin-left: 20px;
+                margin-top: 0.5rem;
+                padding-bottom: 1.5rem;
+            }
+
+            .filter-btn {
+                padding: 8px 16px;
+                background-color: transparent;
+                border: 1px solid #333333;
+                border-radius: 20px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-size: 0.9rem;
+                color: #ffffff;
+            }
+
+            .filter-btn.active {
+                background-color: #8a18a4;
+                color: black;
+                border-color: #8a18a4;
+            }
+
+            .filter-btn:hover {
+                background-color: rgba(29, 185, 84, 0.1);
+                border-color: #8a18a4;
+            }
+
+            .filter-btn.active:hover {
+                background-color: #c437e4;
+            }
+
+            /* Ensure tracks fade in/out during filtering */
+            .track-item {
+                transition: opacity 0.3s ease, transform 0.3s ease;
+            }
+
+            .track-item.hidden {
+                opacity: 0;
+                transform: scale(0.95);
+                height: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+
+            @media (max-width: 768px) {
+                .filters {
+                    max-width: 100%;
+                    margin: 1rem;
+                    padding: 10px;
+                }
+
+                .filters h1 {
+                    text-align: center;
+                    margin-left: 0;
+                    font-size: 1.5rem;
+                }
+
+                .filter-buttons {
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    gap: 0.5rem;
+                    margin-left: 0;
+                    padding-bottom: 0.5rem;
+                }
+
+                .filter-btn {
+                    padding: 6px 12px;
+                    font-size: 0.8rem;
+                    margin: 0 2px 5px;
+                    flex-grow: 1;
+                    max-width: calc(50% - 10px);
+                }
+
+                .filters h1::after {
+                    width: 50px;
+                    margin: 0.3rem auto;
+                }
+            }
+        </style>
+
+
+        <!-- Featured Playlists -->
+        <section class="featured-playlists">
+            <h2>Featured Playlists</h2>
+            <div class="playlist-grid">
+                <div class="playlist-card" data-playlist="60s">
+                    <div class="playlist-image">
+                        <img src="images/60's Bollywood Classics.jpg" alt="60s Bollywood Classics">
+                        <div class="play-overlay">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <h3>60's Bollywood Classics</h3>
+                    <p>Melodious gems from Rafi, Lata & Kishore Kumar</p>
+                </div>
+                <div class="playlist-card" data-playlist="70s">
+                    <div class="playlist-image">
+                        <img src="images/70's Bollywood Disco.jpg" alt="70s Bollywood Disco">
+                        <div class="play-overlay">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <h3>70's Bollywood Disco</h3>
+                    <p>Groovy hits from the RD Burman era</p>
+                </div>
+                <div class="playlist-card" data-playlist="80s">
+                    <div class="playlist-image">
+                        <img src="images/80's Bollywood Dance Hits.jpg" alt="80s Bollywood Hits">
+                        <div class="play-overlay">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <h3>80's Bollywood Dance Hits</h3>
+                    <p>Soulful love songs from the golden decade</p>
+                </div>
+                <div class="playlist-card" data-playlist="90s">
+                    <div class="playlist-image">
+                        <img src="images/90's romance.jpg" alt="90s Bollywood Romance">
+                        <div class="play-overlay">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <h3>90's Bollywood Hits</h3>
+                    <p>Iconic songs from the era of Kumar Sanu & Alka Yagnik</p>
+                </div>
+                <div class="playlist-card" data-playlist="2000s">
+                    <div class="playlist-image">
+                        <img src="images/2000's Bollywood Fusion.webp" alt="2000s Bollywood Fusion">
+                        <div class="play-overlay">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <h3>2000's Bollywood Fusion</h3>
+                    <p>Modern beats with international influence</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="modal" id="playlistModal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <div class="modal-header">
+                    <img id="modalImage" src="/api/placeholder/400/320" alt="Playlist Cover">
+                    <div class="modal-title">
+                        <h3 id="modalTitle">Playlist Title</h3>
+                        <p id="modalDescription">Playlist Description</p>
+                    </div>
+                </div>
+                <ul class="song-list" id="songList">
+                    <!-- Songs will be inserted here by JavaScript -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- Music Player Popup -->
+        <div class="music-player-popup" id="musicPlayerPopup" style="display: none;">
+            <div class="music-player-header">
+                <h3 id="playerTitle">Now Playing</h3>
+            </div>
+            <div class="music-player-content">
+                <img src="" alt="Album Art" class="music-player-album-art" id="playerAlbumArt">
+                <div class="music-player-info">
+                    <div id="playerSongTitle">Song Title</div>
+                    <div id="playerArtist">Artist</div>
+                </div>
+            </div>
+            <div class="music-player-controls">
+                <button id="prevButton"><i class="fas fa-step-backward"></i></button>
+                <button id="playPauseButton"><i class="fas fa-play"></i></button>
+                <button id="nextButton"><i class="fas fa-step-forward"></i></button>
+                <span class="music-player-close" id="musicPlayerClose">&times;</span>
+            </div>
+            <div class="music-player-progress">
+                <div class="music-player-progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+
+        <script>
+            // Playlist data
+            const playlists = {
+                "60s": {
+                    title: "60's Bollywood Classics",
+                    description: "The golden age of melodious Hindi film music",
+                    image: "images/60's Bollywood Classics.jpg",
+                    songs: [
+                        { title: "Mera Joota Hai Japani", artist: "Mukesh (Shree 420)", duration: "4:12" },
+                        { title: "Pyar Kiya To Darna Kya", artist: "Lata Mangeshkar (Mughal-e-Azam)", duration: "3:43" },
+                        { title: "Aye Meri Zohra Jabeen", artist: "Manna Dey (Waqt)", duration: "4:05" },
+                        { title: "Aaj Kal Tere Mere Pyaar Ke Charche", artist: "Mohammed Rafi (Brahmachari)", duration: "5:21" },
+                        { title: "Mere Mehboob Qayamat Hogi", artist: "Mohammed Rafi (Mr. X in Bombay)", duration: "3:57" }
+                    ]
+                },
+                "70s": {
+                    title: "70's Bollywood Disco",
+                    description: "From RD Burman's groovy beats to Bappi Lahiri's disco",
+                    image: "images/70's Bollywood Disco.jpg",
+                    songs: [
+                        { title: "Dum Maro Dum", artist: "Asha Bhosle (Hare Rama Hare Krishna)", duration: "4:35" },
+                        { title: "Yamma Yamma", artist: "Kishore Kumar (Shaan)", duration: "5:12" },
+                        { title: "Khaike Paan Banaras Wala", artist: "Kishore Kumar (Don)", duration: "4:23" },
+                        { title: "Mehbooba Mehbooba", artist: "RD Burman (Sholay)", duration: "3:47" },
+                        { title: "Aap Jaisa Koi", artist: "Nazia Hassan (Qurbani)", duration: "4:51" }
+                    ]
+                },
+                "80s": {
+                    title: "80's Bollywood Dance Hits",
+                    description: "The era of synthesizers and dance numbers",
+                    image: "images/80's Bollywood Dance Hits.jpg",
+                    songs: [
+                        { title: "I Am A Disco Dancer", artist: "Vijay Benedict (Disco Dancer)", duration: "5:23" },
+                        { title: "Jimmy Jimmy Jimmy Aaja", artist: "Parvati Khan (Disco Dancer)", duration: "3:55" },
+                        { title: "Ek Do Teen", artist: "Alka Yagnik (Tezaab)", duration: "4:42" },
+                        { title: "Jumma Chumma De De", artist: "Sudesh Bhosle (Hum)", duration: "6:21" },
+                        { title: "Tamma Tamma Loge", artist: "Bappi Lahiri (Thanedaar)", duration: "5:12" }
+                    ]
+                },
+                "90s": {
+                    title: "90's Bollywood Romance",
+                    description: "The era of Shah Rukh Khan and romantic anthems",
+                    image: "images/90's Bollywood Romance.jpg",
+                    songs: [
+                        { title: "Tujhe Dekha To", artist: "Kumar Sanu & Lata Mangeshkar (DDLJ)", duration: "5:02" },
+                        { title: "Pehla Nasha", artist: "Udit Narayan & Sadhana Sargam (Jo Jeeta Wohi Sikandar)", duration: "4:49" },
+                        { title: "Ae Mere Humsafar", artist: "Udit Narayan & Alka Yagnik (Baazigar)", duration: "5:37" },
+                        { title: "Tu Cheez Badi Hai Mast Mast", artist: "Udit Narayan & Kavita Krishnamurthy (Mohra)", duration: "4:55" },
+                        { title: "Mehndi Laga Ke Rakhna", artist: "Lata Mangeshkar & Udit Narayan (DDLJ)", duration: "4:12" }
+                    ]
+                },
+                "2000s": {
+                    title: "2000's Bollywood Fusion",
+                    description: "Modern beats with international influence",
+                    image: "images/2000's Bollywood Fusion.webp",
+                    songs: [
+                        { title: "Kal Ho Naa Ho", artist: "Sonu Nigam (Kal Ho Naa Ho)", duration: "5:21" },
+                        { title: "It's The Time To Disco", artist: "KK, Shaan & Vasundhara Das (Kal Ho Naa Ho)", duration: "5:34" },
+                        { title: "Dhoom Machale", artist: "Sunidhi Chauhan (Dhoom)", duration: "3:56" },
+                        { title: "Kajra Re", artist: "Alisha Chinai, Shankar Mahadevan & Javed Ali (Bunty Aur Babli)", duration: "5:48" },
+                        { title: "Mauja Hi Mauja", artist: "Mika Singh (Jab We Met)", duration: "4:03" }
+                    ]
+                }
+            };
+
+            // Get modal elements
+            const modal = document.getElementById('playlistModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+            const songList = document.getElementById('songList');
+            const closeBtn = document.querySelector('.close-btn');
+
+            // Add click event to all playlist cards
+            document.querySelectorAll('.playlist-card').forEach(card => {
+                card.addEventListener('click', function () {
+                    const playlistId = this.getAttribute('data-playlist');
+                    const playlist = playlists[playlistId];
+
+                    // Update modal content
+                    modalImage.src = playlist.image;
+                    modalImage.alt = playlist.title;
+                    modalTitle.textContent = playlist.title;
+                    modalDescription.textContent = playlist.description;
+
+                    // Clear previous songs
+                    songList.innerHTML = '';
+
+                    // Add songs to the list
+                    playlist.songs.forEach((song, index) => {
+                        const li = document.createElement('li');
+                        li.className = 'song-item';
+                        li.innerHTML = `
+                    <div class="song-number">${index + 1}</div>
+                    <div class="song-play"><i class="fas fa-play"></i></div>
+                    <div class="song-info">
+                        <div class="song-title">${song.title}</div>
+                        <div class="song-artist">${song.artist}</div>
+                    </div>
+                    <div class="song-duration">${song.duration}</div>
+                `;
+
+                        // Add click event to play button
+                        const playBtn = li.querySelector('.song-play');
+                        playBtn.addEventListener('click', function (e) {
+                            e.stopPropagation();  // Prevent event bubbling
+
+                            // Open music player
+                            openMusicPlayer(playlist, index);
+                        });
+
+                        songList.appendChild(li);
+                    });
+
+                    // Show modal
+                    modal.style.display = 'flex';
+                });
+            });
+
+            // Close modal when clicking X
+            closeBtn.addEventListener('click', function () {
+                modal.style.display = 'none';
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            // POPUP MUSIC PLAYER
+            const musicPlayerPopup = document.getElementById('musicPlayerPopup');
+            const musicPlayerClose = document.getElementById('musicPlayerClose');
+            const playerTitle = document.getElementById('playerTitle');
+            const playerAlbumArt = document.getElementById('playerAlbumArt');
+            const playerSongTitle = document.getElementById('playerSongTitle');
+            const playerArtist = document.getElementById('playerArtist');
+            const playPauseButton = document.getElementById('playPauseButton');
+            const prevButton = document.getElementById('prevButton');
+            const nextButton = document.getElementById('nextButton');
+            const progressBar = document.getElementById('progressBar');
+
+            let currentPlaylist = null;
+            let currentSongIndex = 0;
+            let isPlaying = false;
+            let audioElement = new Audio();
+
+            function openMusicPlayer(playlist, songIndex) {
+                currentPlaylist = playlist;
+                currentSongIndex = songIndex;
+                updatePlayerUI();
+                playSong();
+                musicPlayerPopup.style.display = 'flex';
+            }
+
+            function updatePlayerUI() {
+                const song = currentPlaylist.songs[currentSongIndex];
+                playerAlbumArt.src = currentPlaylist.image;
+                playerSongTitle.textContent = song.title;
+                playerArtist.textContent = song.artist;
+                playerTitle.textContent = currentPlaylist.title;
+            }
+
+            function playSong() {
+                const song = currentPlaylist.songs[currentSongIndex];
+                audioElement.src = `songs/${song.title}.mp3`; // Assumes mp3 files exist
+                audioElement.play();
+                isPlaying = true;
+                updatePlayPauseIcon();
+            }
+
+            function togglePlayPause() {
+                if (isPlaying) {
+                    audioElement.pause();
+                    isPlaying = false;
+                } else {
+                    audioElement.play();
+                    isPlaying = true;
+                }
+                updatePlayPauseIcon();
+            }
+
+            function updatePlayPauseIcon() {
+                const icon = playPauseButton.querySelector('i');
+                icon.classList.toggle('fa-play', !isPlaying);
+                icon.classList.toggle('fa-pause', isPlaying);
+            }
+
+            function nextSong() {
+                currentSongIndex = (currentSongIndex + 1) % currentPlaylist.songs.length;
+                updatePlayerUI();
+                playSong();
+            }
+
+            function prevSong() {
+                currentSongIndex = (currentSongIndex - 1 + currentPlaylist.songs.length) % currentPlaylist.songs.length;
+                updatePlayerUI();
+                playSong();
+            }
+
+            // Update progress bar
+            audioElement.addEventListener('timeupdate', () => {
+                const progress = (audioElement.currentTime / audioElement.duration) * 100;
+                progressBar.style.width = `${progress}%`;
+            });
+
+            // Auto-play next song when current song ends
+            audioElement.addEventListener('ended', nextSong);
+
+            // Music player close button
+            musicPlayerClose.addEventListener('click', () => {
+                musicPlayerPopup.style.display = 'none';
+                audioElement.pause();
+                isPlaying = false;
+                updatePlayPauseIcon();
+            });
+
+            // Player control buttons
+            playPauseButton.addEventListener('click', togglePlayPause);
+            nextButton.addEventListener('click', nextSong);
+            prevButton.addEventListener('click', prevSong);
+        </script>
+
+<style>
+    .music-player-popup {
+        width: 1350px;
+        height: 20px;
+        margin: 10% auto;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        position: relative; /* To help with absolute positioning */
+    }
+
+    .music-player-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .music-player-controls {
+        display: flex;
+        justify-content: flex-end; /* Align controls to the right */
+        margin-right: 120px;
+        align-items: center;
+        position: absolute; /* Position absolutely */
+        right: 15px; /* Align to the right with some padding */
+        top: 50%; /* Center vertically */
+        transform: translateY(-50%); /* Precise vertical centering */
+    }
+
+    .music-player-controls button {
+        background: none;
+        border: none;
+        font-size: 20px;
+        margin: 0 20px; /* Reduced margin between buttons */
+        cursor: pointer;
+        color: white;
+    }
+
+    .music-player-controls button:hover{
+        color: #8a18a4;
+    }
+
+    .music-player-close {
+        color: #aaa;
+        float: right;
+        margin-left: 20px;
+        font-size: 30px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .music-player-close:hover {
+        color: #8a18a4;
+    }
+
+    @media screen and (max-width: 768px) {
+        .music-player-popup {
+            width: 1250px;
+            margin: 5% auto;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .music-player-controls {
+            right: 10px; /* Slightly less padding on mobile */
+        }
+
+        .music-player-controls button {
+            font-size: 24px;
+            margin: 0 10px;
+        }
+    }
+
+    /* Rest of the previous styles remain the same */
+    .music-player-header h3 {
+        margin: 40px;
+    }
+
+    .music-player-content {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .music-player-album-art {
+        width: 70px;
+        height: 70px;
+        object-fit: cover;
+        margin-right: 10px;
+        border-radius: 5px;
+    }
+
+    .music-player-info {
+        flex-grow: 1;
+    }
+
+    .music-player-info div {
+        margin: 5px 0;
+    }
+
+    #playerSongTitle {
+        font-weight: bold;
+    }
+
+    .music-player-progress {
+        height: 4px;
+        border-radius: 2px;
+    }
+</style>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h2>SonicFusion</h2>
+                <p>Your ultimate music destination</p>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-newsletter">
+                <h3>Stay Updated</h3>
+                <p>Subscribe to our newsletter for the latest music updates</p>
+                <form id="newsletter-form" action="newsletter_subscribe.php" method="post">
+                    <input type="email" name="email" placeholder="Your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+
+                <!-- Popup Message -->
+                <div id="newsletter-popup" class="newsletter-popup">
+                    <div class="popup-content">
+                        <span class="popup-close">&times;</span>
+                        <h4>Thank You!</h4>
+                        <p>You have successfully subscribed to our newsletter.</p>
+                    </div>
+                </div>
+            </div>
+
+            <style>
+                /* Existing styles (assumed) */
+                .footer-newsletter {
+                    position: relative;
+                }
+
+                .footer-newsletter form {
+                    display: flex;
+                    margin-top: 15px;
+                }
+
+                .footer-newsletter input[type="email"] {
+                    flex: 1;
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px 0 0 4px;
+                }
+
+                .footer-newsletter button {
+                    padding: 10px 20px;
+                    background-color: #8a18a4;
+                    color: white;
+                    border: none;
+                    border-radius: 0 4px 4px 0;
+                    cursor: pointer;
+                }
+
+                /* Popup styles */
+                .newsletter-popup {
+                    display: none;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(26, 26, 26, 0.7);
+                    z-index: 1000;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .popup-content {
+                    background-color: rgb(5, 5, 5);
+                    padding: 25px;
+                    border-radius: 8px;
+                    max-width: 400px;
+                    text-align: center;
+                    position: relative;
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                    animation: popupFadeIn 0.3s ease-out;
+                }
+
+                @keyframes popupFadeIn {
+                    from {
+                        opacity: 0;
+                        transform: translateY(-20px);
+                    }
+
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+
+                .popup-close {
+                    position: absolute;
+                    top: 10px;
+                    right: 15px;
+                    font-size: 24px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    color: white;
+                }
+
+                .popup-close:hover {
+                    color: #8a18a4;
+                }
+
+                .popup-content h4 {
+                    margin-top: 10px;
+                    color: #8a18a4;
+                    font-size: 1.5rem;
+                }
+            </style>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const newsletterForm = document.getElementById('newsletter-form');
+                    const popup = document.getElementById('newsletter-popup');
+                    const closeBtn = document.querySelector('.popup-close');
+                    const popupMessage = document.querySelector('.popup-content p');
+                    const popupTitle = document.querySelector('.popup-content h4');
+
+                    // Handle form submission
+                    newsletterForm.addEventListener('submit', function (e) {
+                        e.preventDefault();
+
+                        // Show loading state
+                        popupTitle.textContent = 'Processing...';
+                        popupMessage.textContent = 'Please wait while we process your subscription.';
+                        popup.style.display = 'flex';
+
+                        // Get form data
+                        const formData = new FormData(newsletterForm);
+
+                        // Submit form using fetch API with error handling
+                        fetch('newsletter_subscribe.php', {
+                            method: 'POST',
+                            body: formData
+                        })
+                            .then(response => {
+                                // Check if response is ok
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok: ' + response.status);
+                                }
+
+                                // Try to parse as JSON
+                                return response.text().then(text => {
+                                    try {
+                                        return JSON.parse(text);
+                                    } catch (e) {
+                                        console.error('Invalid JSON response:', text);
+                                        throw new Error('You have successfully subscribed to our newsletter.' + text);
+                                    }
+                                });
+                            })
+                            .then(data => {
+                                // Set appropriate message
+                                if (data.success) {
+                                    popupTitle.textContent = 'Thank You!';
+                                    popupMessage.textContent = data.message;
+
+                                    // Clear form if successful
+                                    newsletterForm.reset();
+                                } else {
+                                    popupTitle.textContent = 'Error';
+                                    popupMessage.textContent = data.message;
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error details:', error);
+                                popupTitle.textContent = 'Thank You!';
+                                popupMessage.textContent = ' ' + error.message;
+                            });
+                    });
+
+                    // Close popup when X is clicked
+                    closeBtn.addEventListener('click', function () {
+                        popup.style.display = 'none';
+                    });
+
+                    // Close popup when clicking outside the popup
+                    window.addEventListener('click', function (event) {
+                        if (event.target === popup) {
+                            popup.style.display = 'none';
+                        }
+                    });
+                });
+            </script>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 SonicFusion. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-spotify"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="home.js"></script>
+    <script src="retro.js"></script>
+    <script src="https://kit.fontawesome.com/9e5a623fa6.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
